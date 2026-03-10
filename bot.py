@@ -23,11 +23,11 @@ for stock in stocks:
     rsi = RSIIndicator(data['Close'].squeeze()).rsi()
     latest_rsi = rsi.iloc[-1]
 
-    price = data['Close'].iloc[-1]
+    price = float(data['Close'].iloc[-1])
 
     if latest_rsi < 60:
         signal = "BUY 🟢"
-        results.append(f"{stock} | Price: {round(price,2)} | RSI: {round(latest_rsi,1)}")
+        results.append(f"{stock.replace('.VN','')} | {int(price):,} VND | RSI {round(latest_rsi,1)}")
 
 message = "📊 VN30 SIGNAL\n\n"
 
@@ -41,4 +41,5 @@ url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 requests.post(url, data={
     "chat_id": CHAT_ID,
     "text": message
+
 })
